@@ -1,0 +1,35 @@
+<div class="shell">
+  <aside class="sidebar">
+    <div class="logo-section">
+      <svg viewBox="0 0 16 16" fill="none"><path d="M8 2L13 5V11L8 14L3 11V5L8 2Z" stroke="currentColor" stroke-width="1.5"/><circle cx="8" cy="8" r="2" fill="currentColor"/></svg>
+      <h1 class="logo-title syne">FedMed</h1>
+      <p class="logo-tag">FL Healthcare Platform</p>
+    </div>
+    <div class="nav-menu">
+      <button class="nav-item active" data-view="dashboard" onclick="navigate('dashboard')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg> Dashboard
+      </button>
+      <button class="nav-item" data-view="upload" onclick="navigate('upload')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg> Upload Data
+      </button>
+      <button class="nav-item" data-view="monitor" onclick="navigate('monitor')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="3"></circle><line x1="12" y1="2" x2="12" y2="4"></line><line x1="12" y1="20" x2="12" y2="22"></line><line x1="2" y1="12" x2="4" y2="12"></line><line x1="20" y1="12" x2="22" y2="12"></line></svg> FL Monitor <span class="dot pill-teal" style="margin-left:auto"></span>
+      </button>
+      <button class="nav-item" data-view="predictions" onclick="navigate('predictions')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg> Predictions
+      </button>
+      <button class="nav-item" data-view="architecture" onclick="navigate('architecture')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg> Architecture
+      </button>
+    </div>
+    <div class="nav-spacer"></div>
+    <div class="user-section">
+      <div class="avatar">PS</div>
+      <div class="user-details">
+        <p class="user-name">Dr. Priya Sharma</p>
+        <p class="user-role">Radiologist · Node A</p>
+      </div>
+    </div>
+  </aside>
+  <main class="main" id="main-content"></main>
+</div>

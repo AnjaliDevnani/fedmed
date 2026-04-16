@@ -1,0 +1,73 @@
+<template id="view-predictions">
+  <div class="fade-in">
+    <div class="page-header">
+      <h2 class="page-title syne">Diagnosis Predictions</h2>
+      <p class="page-subtitle">All results from global FL model · Patient identities anonymised per HIPAA</p>
+    </div>
+    <div style="display:flex; gap:16px; margin-bottom:24px;">
+      <select class="form-control" style="width:200px;"><option>All Diagnoses</option><option>Normal</option><option>Pneumonia</option><option>COVID</option><option>Pleural Effusion</option></select>
+      <select class="form-control" style="width:180px;"><option>All Nodes</option><option>Node A</option><option>Node B</option><option>Node C</option></select>
+      <select class="form-control" style="width:180px;"><option>All Risk Levels</option><option>High</option><option>Medium</option><option>Low</option></select>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:16px; margin-bottom:24px;">
+      <div class="card metric-card" style="display:flex; gap:14px; align-items:flex-start;">
+        <div style="width:40px; height:40px; border-radius:50%; background:rgba(255,107,107,.22); display:flex; align-items:center; justify-content:center; font-size:20px;">🫁</div>
+        <div style="flex:1;">
+          <div style="display:flex; align-items:center; gap:12px; margin-bottom:6px;"><span class="mono" style="font-weight:600; font-size:13px;">P-0847</span> <span class="chip chip-gray">Node A</span> <span class="chip chip-coral">High Risk</span> <span class="text3" style="font-size:11px; margin-left:auto; text-transform:none;">2 min ago</span></div>
+          <div class="syne" style="font-size:13px; font-weight:700; color:var(--coral); margin-bottom:4px;">Pneumonia</div>
+          <div class="text3" style="font-size:11px; margin-bottom:10px; text-transform:none;">Age: 52 · Chest X-Ray · Global Model Round 10</div>
+          <div style="display:flex; align-items:center; gap:12px; font-size:11px;"><span class="text3">Confidence</span> <div class="progress-wrap" style="flex:1; height:4px;"><div class="progress-bar" style="width:87%; background:var(--coral);"></div></div> <span class="mono">87%</span></div>
+        </div>
+      </div>
+      <div class="card metric-card" style="display:flex; gap:14px; align-items:flex-start;">
+        <div style="width:40px; height:40px; border-radius:50%; background:rgba(0,201,167,.22); display:flex; align-items:center; justify-content:center; font-size:20px;">✅</div>
+        <div style="flex:1;">
+          <div style="display:flex; align-items:center; gap:12px; margin-bottom:6px;"><span class="mono" style="font-weight:600; font-size:13px;">P-1023</span> <span class="chip chip-gray">Node B</span> <span class="chip chip-teal">Low Risk</span> <span class="text3" style="font-size:11px; margin-left:auto; text-transform:none;">15 min ago</span></div>
+          <div class="syne" style="font-size:13px; font-weight:700; color:var(--teal); margin-bottom:4px;">Normal</div>
+          <div class="text3" style="font-size:11px; margin-bottom:10px; text-transform:none;">Age: 34 · Chest X-Ray · Global Model Round 10</div>
+          <div style="display:flex; align-items:center; gap:12px; font-size:11px;"><span class="text3">Confidence</span> <div class="progress-wrap" style="flex:1; height:4px;"><div class="progress-bar" style="width:94%; background:var(--teal);"></div></div> <span class="mono">94%</span></div>
+        </div>
+      </div>
+      <div class="card metric-card" style="display:flex; gap:14px; align-items:flex-start;">
+        <div style="width:40px; height:40px; border-radius:50%; background:rgba(245,166,35,.22); display:flex; align-items:center; justify-content:center; font-size:20px;">⚠️</div>
+        <div style="flex:1;">
+          <div style="display:flex; align-items:center; gap:12px; margin-bottom:6px;"><span class="mono" style="font-weight:600; font-size:13px;">P-0956</span> <span class="chip chip-gray">Node A</span> <span class="chip chip-amber">High Risk</span> <span class="text3" style="font-size:11px; margin-left:auto; text-transform:none;">1 hr ago</span></div>
+          <div class="syne" style="font-size:13px; font-weight:700; color:var(--amber); margin-bottom:4px;">COVID Pneumonia</div>
+          <div class="text3" style="font-size:11px; margin-bottom:10px; text-transform:none;">Age: 61 · CT Scan · Global Model Round 10</div>
+          <div style="display:flex; align-items:center; gap:12px; font-size:11px;"><span class="text3">Confidence</span> <div class="progress-wrap" style="flex:1; height:4px;"><div class="progress-bar" style="width:79%; background:var(--amber);"></div></div> <span class="mono">79%</span></div>
+        </div>
+      </div>
+      <div class="card metric-card" style="display:flex; gap:14px; align-items:flex-start;">
+        <div style="width:40px; height:40px; border-radius:50%; background:rgba(79,142,247,.22); display:flex; align-items:center; justify-content:center; font-size:20px;">🔵</div>
+        <div style="flex:1;">
+          <div style="display:flex; align-items:center; gap:12px; margin-bottom:6px;"><span class="mono" style="font-weight:600; font-size:13px;">P-1124</span> <span class="chip chip-gray">Node C</span> <span class="chip chip-amber">Medium Risk</span> <span class="text3" style="font-size:11px; margin-left:auto; text-transform:none;">3 hr ago</span></div>
+          <div class="syne" style="font-size:13px; font-weight:700; color:var(--blue); margin-bottom:4px;">Pleural Effusion</div>
+          <div class="text3" style="font-size:11px; margin-bottom:10px; text-transform:none;">Age: 45 · X-Ray · Global Model Round 10</div>
+          <div style="display:flex; align-items:center; gap:12px; font-size:11px;"><span class="text3">Confidence</span> <div class="progress-wrap" style="flex:1; height:4px;"><div class="progress-bar" style="width:91%; background:var(--blue);"></div></div> <span class="mono">91%</span></div>
+        </div>
+      </div>
+      <div class="card metric-card" style="display:flex; gap:14px; align-items:flex-start;">
+        <div style="width:40px; height:40px; border-radius:50%; background:rgba(0,201,167,.22); display:flex; align-items:center; justify-content:center; font-size:20px;">✅</div>
+        <div style="flex:1;">
+          <div style="display:flex; align-items:center; gap:12px; margin-bottom:6px;"><span class="mono" style="font-weight:600; font-size:13px;">P-0789</span> <span class="chip chip-gray">Node B</span> <span class="chip chip-teal">Low Risk</span> <span class="text3" style="font-size:11px; margin-left:auto; text-transform:none;">5 hr ago</span></div>
+          <div class="syne" style="font-size:13px; font-weight:700; color:var(--teal); margin-bottom:4px;">Normal</div>
+          <div class="text3" style="font-size:11px; margin-bottom:10px; text-transform:none;">Age: 28 · MRI · Global Model Round 10</div>
+          <div style="display:flex; align-items:center; gap:12px; font-size:11px;"><span class="text3">Confidence</span> <div class="progress-wrap" style="flex:1; height:4px;"><div class="progress-bar" style="width:96%; background:var(--teal);"></div></div> <span class="mono">96%</span></div>
+        </div>
+      </div>
+      <div class="card metric-card" style="display:flex; gap:14px; align-items:flex-start;">
+        <div style="width:40px; height:40px; border-radius:50%; background:rgba(157,125,255,.22); display:flex; align-items:center; justify-content:center; font-size:20px;">🔬</div>
+        <div style="flex:1;">
+          <div style="display:flex; align-items:center; gap:12px; margin-bottom:6px;"><span class="mono" style="font-weight:600; font-size:13px;">P-1290</span> <span class="chip chip-gray">Node C</span> <span class="chip chip-coral">High Risk</span> <span class="text3" style="font-size:11px; margin-left:auto; text-transform:none;">8 hr ago</span></div>
+          <div class="syne" style="font-size:13px; font-weight:700; color:var(--purple); margin-bottom:4px;">Tuberculosis</div>
+          <div class="text3" style="font-size:11px; margin-bottom:10px; text-transform:none;">Age: 70 · Chest X-Ray · Global Model Round 10</div>
+          <div style="display:flex; align-items:center; gap:12px; font-size:11px;"><span class="text3">Confidence</span> <div class="progress-wrap" style="flex:1; height:4px;"><div class="progress-bar" style="width:83%; background:var(--purple);"></div></div> <span class="mono">83%</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="inner-card" style="display:flex; gap:16px; align-items:flex-start;">
+       <div style="font-size:24px;">🔒</div>
+       <p style="font-size:12px; color:var(--text2); line-height:1.6; margin:0;">All predictions made using aggregated global model weights from Federated Learning Round 10. Patient raw data was processed locally at each hospital node and never transmitted. Differential privacy noise (ε=0.84) applied during training.</p>
+    </div>
+  </div>
+</template>

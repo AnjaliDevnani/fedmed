@@ -1,0 +1,6 @@
+venv/
+fedmed_model/venv/
+__pycache__/
+*.pyc
+.git/
+.DS_Store

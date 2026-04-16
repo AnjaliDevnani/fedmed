@@ -1,0 +1,95 @@
+<template id="view-dashboard">
+  <div class="fade-in">
+    <div class="page-header">
+      <h2 class="page-title syne">Overview</h2>
+      <p class="page-subtitle">Federated learning status across all participating institutions</p>
+    </div>
+    <div class="grid-4">
+      <div class="card metric-card">
+        <div class="metric-label"><span class="dot pill-teal"></span> Active Nodes</div>
+        <div class="metric-value">3/3</div>
+        <p class="metric-sub">All hospitals online</p>
+      </div>
+      <div class="card metric-card">
+        <div class="metric-label"><span class="dot pill-blue"></span> Global Accuracy</div>
+        <div class="metric-value">92.3%</div>
+        <p class="metric-sub">↑ 1.2% vs last round</p>
+      </div>
+      <div class="card metric-card">
+        <div class="metric-label"><span class="dot pill-purple"></span> Patients Diagnosed</div>
+        <div class="metric-value">4,242</div>
+        <p class="metric-sub">↑ 38 today</p>
+      </div>
+      <div class="card metric-card">
+        <div class="metric-label"><span class="dot pill-amber"></span> Privacy ε</div>
+        <div class="metric-value">0.84</div>
+        <p class="metric-sub">Diff. Privacy budget</p>
+      </div>
+    </div>
+    <div class="grid-2-60">
+      <div class="card">
+        <div class="flex-header">
+          <h3 class="card-title syne">Global Model Accuracy</h3>
+          <span class="chip chip-teal">Round 10/10</span>
+        </div>
+        <div style="height: 200px;"><canvas id="dash-chart"></canvas></div>
+        <div style="display:flex; justify-content:center; gap:16px; margin-top:16px; font-size:11px; color:var(--text3);">
+          <div style="display:flex; align-items:center; gap:6px;"><span class="dot pill-teal"></span> Global Accuracy</div>
+          <div style="display:flex; align-items:center; gap:6px;"><span class="dot pill-coral" style="background:var(--coral); box-shadow:0 0 6px var(--coral);"></span> Val Loss ×100</div>
+        </div>
+      </div>
+      <div class="card" style="display:flex; flex-direction:column; gap:12px;">
+        <h3 class="card-title syne" style="margin-bottom:8px;">Hospital Nodes</h3>
+        <div class="inner-card" style="border-top: 2px solid var(--amber);">
+          <div class="flex-header" style="margin-bottom:8px;">
+            <div style="font-weight:700; font-size:12px;">City General</div>
+            <span class="chip chip-amber"><span class="dot pill-amber" style="margin-right:6px"></span> training</span>
+          </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; margin-bottom:10px;">
+             <div><span class="text3" style="font-size:10px;">Accuracy</span><div class="mono" style="font-size:14px; margin-top:2px;">87.4%</div></div>
+             <div><span class="text3" style="font-size:10px;">Samples</span><div class="mono" style="font-size:14px; margin-top:2px;">1,247</div></div>
+          </div>
+          <div class="progress-wrap" style="height:3px;"><div class="progress-bar" style="width:87.4%; background:var(--amber);"></div></div>
+        </div>
+        <div class="inner-card" style="border-top: 2px solid var(--teal);">
+          <div class="flex-header" style="margin-bottom:8px;">
+            <div style="font-weight:700; font-size:12px;">St. Mary's Med</div>
+            <span class="chip chip-teal"><span class="dot pill-teal" style="margin-right:6px"></span> active</span>
+          </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; margin-bottom:10px;">
+             <div><span class="text3" style="font-size:10px;">Accuracy</span><div class="mono" style="font-size:14px; margin-top:2px;">84.1%</div></div>
+             <div><span class="text3" style="font-size:10px;">Samples</span><div class="mono" style="font-size:14px; margin-top:2px;">2,104</div></div>
+          </div>
+          <div class="progress-wrap" style="height:3px;"><div class="progress-bar" style="width:84.1%; background:var(--teal);"></div></div>
+        </div>
+        <div class="inner-card" style="border-top: 2px solid var(--amber);">
+          <div class="flex-header" style="margin-bottom:8px;">
+            <div style="font-weight:700; font-size:12px;">Apollo Research</div>
+            <span class="chip chip-amber"><span class="dot pill-amber" style="margin-right:6px"></span> training</span>
+          </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; margin-bottom:10px;">
+             <div><span class="text3" style="font-size:10px;">Accuracy</span><div class="mono" style="font-size:14px; margin-top:2px;">89.2%</div></div>
+             <div><span class="text3" style="font-size:10px;">Samples</span><div class="mono" style="font-size:14px; margin-top:2px;">891</div></div>
+          </div>
+          <div class="progress-wrap" style="height:3px;"><div class="progress-bar" style="width:89.2%; background:var(--amber);"></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="card" style="padding:0; overflow:hidden;">
+      <div class="flex-header" style="padding: 20px 20px 0 20px;">
+        <h3 class="card-title syne">Recent Predictions</h3>
+        <span class="chip chip-gray">Privacy-Preserved · No Raw Data Shared</span>
+      </div>
+      <table style="margin-top:4px;">
+        <thead><tr><th>Patient ID</th><th>Scan Type</th><th>Diagnosis</th><th>Confidence</th><th>Hospital Node</th><th>Time</th></tr></thead>
+        <tbody>
+          <tr><td class="bold-mono" style="color:#e8eaf0;">P-0847</td><td>Chest X-Ray</td><td style="color:var(--coral); font-weight:500;">Pneumonia</td><td><span class="chip chip-coral" style="border-radius:6px; padding:4px 8px;">87%</span></td><td><span class="chip chip-gray">Node A</span></td><td>2 min ago</td></tr>
+          <tr><td class="bold-mono" style="color:#e8eaf0;">P-1023</td><td>Chest X-Ray</td><td style="color:var(--teal); font-weight:500;">Normal</td><td><span class="chip chip-teal" style="border-radius:6px; padding:4px 8px;">94%</span></td><td><span class="chip chip-gray">Node B</span></td><td>15 min ago</td></tr>
+          <tr><td class="bold-mono" style="color:#e8eaf0;">P-0956</td><td>CT Scan</td><td style="color:var(--amber); font-weight:500;">COVID Pneumonia</td><td><span class="chip chip-amber" style="border-radius:6px; padding:4px 8px;">79%</span></td><td><span class="chip chip-gray">Node A</span></td><td>1 hr ago</td></tr>
+          <tr><td class="bold-mono" style="color:#e8eaf0;">P-1124</td><td>X-Ray</td><td style="color:var(--blue); font-weight:500;">Pleural Effusion</td><td><span class="chip chip-blue" style="border-radius:6px; padding:4px 8px;">91%</span></td><td><span class="chip chip-gray">Node C</span></td><td>3 hr ago</td></tr>
+          <tr><td class="bold-mono" style="color:#e8eaf0;">P-0789</td><td>MRI</td><td style="color:var(--teal); font-weight:500;">Normal</td><td><span class="chip chip-teal" style="border-radius:6px; padding:4px 8px;">96%</span></td><td><span class="chip chip-gray">Node B</span></td><td>5 hr ago</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</template>

@@ -1,0 +1,122 @@
+<template id="view-architecture">
+  <div class="fade-in">
+    <div class="page-header">
+      <h2 class="page-title syne">System Architecture</h2>
+      <p class="page-subtitle">Full-stack cloud-native federated learning infrastructure</p>
+    </div>
+    <div class="card" style="margin-bottom:24px;">
+      <div class="flex-header"><h3 class="card-title syne">End-to-End Data Flow</h3><span class="chip chip-amber">AWS EKS · Kubernetes</span></div>
+      <div class="inner-card" style="padding:20px;">
+        <svg viewBox="0 0 740 360" width="100%" height="auto">
+          <rect x="180" y="20" width="410" height="320" fill="none" stroke="rgba(255,255,255,.06)" stroke-width="2" stroke-dasharray="8 4" rx="10"/>
+          <text x="190" y="40" fill="var(--text3)" font-size="11" font-family="'DM Mono'">AWS EKS Cluster</text>
+          <rect x="10" y="100" width="140" height="80" fill="#0c1a35" stroke="#4f8ef7" stroke-width="2" rx="6"/>
+          <text x="75" y="130" fill="#4f8ef7" font-size="14" font-family="'Syne'" font-weight="700" text-anchor="middle">React Frontend</text>
+          <text x="75" y="150" fill="var(--text2)" font-size="10" text-anchor="middle">Doctor Dashboard</text>
+          <text x="75" y="165" fill="var(--text3)" font-size="9" text-anchor="middle">Upload · Predict · Monitor</text>
+          <line x1="150" y1="140" x2="210" y2="140" stroke="#4f8ef7" stroke-width="2"/>
+          <text x="180" y="135" fill="#4f8ef7" font-size="9" font-family="'DM Mono'" text-anchor="middle">REST</text>
+          <rect x="210" y="100" width="140" height="80" fill="#041a14" stroke="#00c9a7" stroke-width="2" rx="6"/>
+          <text x="280" y="130" fill="#00c9a7" font-size="14" font-family="'Syne'" font-weight="700" text-anchor="middle">FastAPI Backend</text>
+          <text x="280" y="150" fill="var(--text2)" font-size="10" text-anchor="middle">REST API · Auth</text>
+          <text x="280" y="165" fill="var(--text3)" font-size="9" text-anchor="middle">Docker Pod</text>
+          <line x1="280" y1="180" x2="280" y2="230" stroke="#f5a623" stroke-width="2" stroke-dasharray="4 4"/>
+          <rect x="210" y="230" width="140" height="60" fill="#1a1400" stroke="#f5a623" stroke-width="2" rx="6"/>
+          <text x="280" y="255" fill="#f5a623" font-size="14" font-family="'Syne'" font-weight="700" text-anchor="middle">PostgreSQL</text>
+          <text x="280" y="275" fill="var(--text2)" font-size="10" text-anchor="middle">Predictions · Audit Logs</text>
+          <line x1="350" y1="140" x2="390" y2="140" stroke="#9d7dff" stroke-width="2"/>
+          <text x="370" y="135" fill="#9d7dff" font-size="9" font-family="'DM Mono'" text-anchor="middle">gRPC</text>
+          <rect x="390" y="100" width="170" height="80" fill="#160d2a" stroke="#9d7dff" stroke-width="2" rx="6"/>
+          <text x="475" y="130" fill="#9d7dff" font-size="14" font-family="'Syne'" font-weight="700" text-anchor="middle">FL Server (Flower)</text>
+          <text x="475" y="150" fill="var(--text2)" font-size="10" text-anchor="middle">FedAvg Aggregation</text>
+          <text x="475" y="165" fill="var(--text3)" font-size="9" text-anchor="middle">Differential Privacy Layers</text>
+          <rect x="390" y="230" width="170" height="60" fill="none" stroke="#00c9a7" stroke-width="2" stroke-dasharray="4 4" rx="6"/>
+          <text x="475" y="255" fill="#e8eaf0" font-size="14" font-family="'Syne'" font-weight="700" text-anchor="middle">Privacy Layer</text>
+          <text x="475" y="275" fill="var(--text3)" font-size="10" text-anchor="middle" style="text-transform:none;">ε-DP · Secure Aggregation</text>
+          <rect x="620" y="60" width="110" height="240" fill="#1a0b0b" stroke="#ff6b6b" stroke-width="2" rx="6"/>
+          <text x="675" y="90" fill="#ff6b6b" font-size="14" font-family="'Syne'" font-weight="700" text-anchor="middle">Hospital A</text>
+          <text x="675" y="150" fill="#ff6b6b" font-size="14" font-family="'Syne'" font-weight="700" text-anchor="middle">Hospital B</text>
+          <text x="675" y="210" fill="#ff6b6b" font-size="14" font-family="'Syne'" font-weight="700" text-anchor="middle">Hospital C</text>
+          <text x="675" y="260" fill="var(--text3)" font-size="10" text-anchor="middle" style="text-transform:none;">PyTorch · Local Data</text>
+          <line x1="560" y1="120" x2="620" y2="85" stroke="#ff6b6b" stroke-width="2"/>
+          <line x1="560" y1="140" x2="620" y2="145" stroke="#ff6b6b" stroke-width="2"/>
+          <line x1="560" y1="160" x2="620" y2="205" stroke="#ff6b6b" stroke-width="2"/>
+          <rect x="525" y="180" width="80" height="40" fill="#1a2032" stroke="none" rx="4"/>
+          <text x="565" y="195" fill="var(--text2)" font-size="9" text-anchor="middle">↑ Model weights only</text>
+          <text x="565" y="210" fill="var(--teal)" font-size="9" text-anchor="middle">Patient data stays local</text>
+        </svg>
+      </div>
+    </div>
+    <div class="grid-2-60">
+      <div class="card">
+        <h3 class="syne" style="margin:0 0 16px 0; font-size:15px; font-weight:600;">Technology Stack</h3>
+        <table>
+          <thead><tr><th>Category</th><th>Tech Name</th><th>Why We Use It</th></tr></thead>
+          <tbody>
+            <tr><td>Frontend</td><td class="mono" style="color:var(--teal)">React + TS</td><td>Component SPA, type safety</td></tr>
+            <tr><td>Styling</td><td class="mono" style="color:var(--teal)">Tailwind CSS</td><td>Utility-first, rapid prototyping</td></tr>
+            <tr><td>Backend</td><td class="mono" style="color:var(--teal)">FastAPI</td><td>Async, auto docs, Pydantic</td></tr>
+            <tr><td>ML</td><td class="mono" style="color:var(--teal)">PyTorch</td><td>Dynamic graphs, pretrained ResNet</td></tr>
+            <tr><td>FL System</td><td class="mono" style="color:var(--teal)">Flower (flwr)</td><td>Framework-agnostic, production-ready</td></tr>
+            <tr><td>Database</td><td class="mono" style="color:var(--teal)">PostgreSQL</td><td>ACID compliance</td></tr>
+            <tr><td>Container</td><td class="mono" style="color:var(--teal)">Docker</td><td>Reproducible builds, scaling</td></tr>
+            <tr><td>Cloud</td><td class="mono" style="color:var(--teal)">AWS EKS</td><td>Managed K8s, weight storage</td></tr>
+            <tr><td>Privacy</td><td class="mono" style="color:var(--teal)">Opacus</td><td>DP, per-sample grads</td></tr>
+            <tr><td>Monitoring</td><td class="mono" style="color:var(--teal)">Prometheus</td><td>Real-time metrics, alerting</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:20px;">
+        <div class="card">
+          <h3 class="syne" style="font-size:14px; font-weight:600; margin:0 0 16px 0;">🛡️ Privacy Mechanisms</h3>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+            <div class="inner-card" style="padding:12px;">
+               <div style="font-weight:600; font-size:12px; margin-bottom:4px;">🔐 Differential Privacy</div>
+               <p style="font-size:10px; color:var(--text3); margin:0 0 8px 0; line-height:1.4;">Gaussian noise added to gradients before upload.</p>
+               <div class="mono" style="color:var(--teal); font-size:12px;">ε = 0.84</div>
+            </div>
+            <div class="inner-card" style="padding:12px;">
+               <div style="font-weight:600; font-size:12px; margin-bottom:4px;">🔒 Secure Aggregation</div>
+               <p style="font-size:10px; color:var(--text3); margin:0 0 8px 0; line-height:1.4;">Server sees only the sum of encrypted weights.</p>
+               <div class="mono" style="color:var(--teal); font-size:12px;">128-bit</div>
+            </div>
+            <div class="inner-card" style="padding:12px;">
+               <div style="font-weight:600; font-size:12px; margin-bottom:4px;">✂️ Gradient Clipping</div>
+               <p style="font-size:10px; color:var(--text3); margin:0 0 8px 0; line-height:1.4;">Limits sensitivity, bounds single sample influence.</p>
+               <div class="mono" style="color:var(--teal); font-size:12px;">C = 1.0</div>
+            </div>
+            <div class="inner-card" style="padding:12px;">
+               <div style="font-weight:600; font-size:12px; margin-bottom:4px;">🏠 Data Localisation</div>
+               <p style="font-size:10px; color:var(--text3); margin:0 0 8px 0; line-height:1.4;">Raw patient data never leaves hospital's K8s pod.</p>
+               <div class="mono" style="color:var(--teal); font-size:12px;">HIPAA ✓</div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <h3 class="syne" style="font-size:14px; font-weight:600; margin:0 0 16px 0;">📋 Viva Prep Highlights</h3>
+          <div style="display:flex; flex-direction:column; gap:8px; margin-bottom:16px;">
+            <div style="border-left:2px solid var(--purple); background:var(--bg3); padding:7px 10px; border-radius:0 4px 4px 0;">
+              <span style="font-weight:700; color:white; font-size:12px;">Q: Why FL?</span> <span class="text3" style="text-transform:none; font-size:12px;">→ Hospitals can't share patient data due to HIPAA/GDPR</span>
+            </div>
+            <div style="border-left:2px solid var(--purple); background:var(--bg3); padding:7px 10px; border-radius:0 4px 4px 0;">
+              <span style="font-weight:700; color:white; font-size:12px;">Q: FedAvg?</span> <span class="text3" style="text-transform:none; font-size:12px;">→ Weighted average of local weights by sample count</span>
+            </div>
+            <div style="border-left:2px solid var(--purple); background:var(--bg3); padding:7px 10px; border-radius:0 4px 4px 0;">
+              <span style="font-weight:700; color:white; font-size:12px;">Q: Why Flower?</span> <span class="text3" style="text-transform:none; font-size:12px;">→ Framework-agnostic, production-ready, 100+ clients</span>
+            </div>
+            <div style="border-left:2px solid var(--purple); background:var(--bg3); padding:7px 10px; border-radius:0 4px 4px 0;">
+              <span style="font-weight:700; color:white; font-size:12px;">Q: DP Guarantee</span> <span class="text3" style="text-transform:none; font-size:12px;">→ Adding noise gives (ε,δ)-privacy guarantee</span>
+            </div>
+            <div style="border-left:2px solid var(--purple); background:var(--bg3); padding:7px 10px; border-radius:0 4px 4px 0;">
+              <span style="font-weight:700; color:white; font-size:12px;">Q: Why FastAPI?</span> <span class="text3" style="text-transform:none; font-size:12px;">→ Async Python, auto OpenAPI docs, 10× faster</span>
+            </div>
+            <div style="border-left:2px solid var(--purple); background:var(--bg3); padding:7px 10px; border-radius:0 4px 4px 0;">
+              <span style="font-weight:700; color:white; font-size:12px;">Q: Kubernetes?</span> <span class="text3" style="text-transform:none; font-size:12px;">→ Auto-scales, self-heals, rolling deployments</span>
+            </div>
+          </div>
+          <button class="btn btn-secondary" style="width:100%;" onclick="alert('View full Q&A list in documentation')">Get Full Viva Q&A ↗</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

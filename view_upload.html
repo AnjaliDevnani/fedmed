@@ -1,0 +1,100 @@
+<template id="view-upload">
+  <div class="fade-in">
+    <div class="page-header">
+      <h2 class="page-title syne">Upload Patient Data</h2>
+      <p class="page-subtitle">Data stays on your local node — only model gradients are shared with the FL server</p>
+    </div>
+    <div class="grid-2-65">
+      <div style="display:flex; flex-direction:column; gap:20px;">
+        <div class="dropzone" onclick="triggerFileSelect()" ondragover="event.preventDefault(); this.classList.add('dragover')" ondragleave="event.preventDefault(); this.classList.remove('dragover')" ondrop="handleDrop(event)">
+          <div style="font-size:36px; margin-bottom:12px;">🫁</div>
+          <div class="syne" style="font-size:15px; font-weight:700;">Drop medical scan or dataset here</div>
+          <div style="font-size:12px; color:var(--text3); margin-top:8px;">Supports DICOM, JPEG, PNG, CSV, XLSX — max 2GB</div>
+          <div style="font-size:13px; color:var(--teal); margin-top:16px;">Click to browse files</div>
+          <input type="file" id="fileUpload" style="display:none;" accept=".dcm,.jpg,.jpeg,.png,.csv,.xlsx" onchange="handleFile(this.files[0])">
+        </div>
+        <div id="upload-preview" class="card fade-in" style="display:none; padding:16px; border-color:var(--border2);">
+          <div class="flex-header" style="margin-bottom:8px;">
+            <div class="syne" style="font-size:13px; font-weight:600;">Selected File</div>
+            <button onclick="clearFile()" style="background:none; border:none; color:var(--coral); cursor:pointer; font-size:11px;">✕ Remove</button>
+          </div>
+          <div style="display:flex; align-items:center; gap:12px;">
+            <div id="file-icon" style="font-size:24px;">🔬</div>
+            <div>
+              <div id="filename" class="mono" style="font-size:13px; font-weight:500; color:var(--text);">scan.dcm</div>
+              <div id="filesize" style="font-size:11px; color:var(--text3);">1.2 MB</div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <h3 class="card-title syne" style="margin-bottom:16px;">Scan Metadata</h3>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+             <div style="display:flex; flex-direction:column; gap:6px;"><span class="text3">Patient ID</span><input type="text" class="form-control" placeholder="e.g. P-1234"></div>
+             <div style="display:flex; flex-direction:column; gap:6px;"><span class="text3">Scan Type</span><select class="form-control"><option>Select type…</option><option>Chest X-Ray</option><option>CT Scan</option><option>MRI</option><option>Tabular (CSV)</option></select></div>
+             <div style="display:flex; flex-direction:column; gap:6px;"><span class="text3">Hospital Node</span><select class="form-control"><option>Node A — City General</option><option>Node B — St. Mary's</option><option>Node C — Apollo Research</option></select></div>
+             <div style="display:flex; flex-direction:column; gap:6px;"><span class="text3">Training Label</span><select class="form-control"><option>Select diagnosis…</option><option>Normal</option><option>Pneumonia</option><option>COVID-19 Pneumonia</option><option>Pleural Effusion</option><option>Tuberculosis</option></select></div>
+             <div style="grid-column: span 2; display:flex; flex-direction:column; gap:6px;"><span class="text3">Clinical Notes (optional)</span><textarea class="form-control" rows="2" placeholder="Brief clinical observations…"></textarea></div>
+          </div>
+        </div>
+        <div id="upload-progress" class="fade-in" style="display:none;">
+          <div style="display:flex; justify-content:space-between; margin-bottom:8px; font-size:12px; font-weight:500;">
+             <span id="upload-progress-text" style="color:var(--text2);">Encrypting locally…</span>
+             <span id="upload-progress-pct" class="mono" style="color:var(--teal);">0%</span>
+          </div>
+          <div class="progress-wrap" style="height:6px; border-radius:10px;"><div id="upload-progress-fill" class="progress-bar" style="width:0%; border-radius:10px;"></div></div>
+        </div>
+        <div id="upload-success" class="fade-in" style="display:none; background:rgba(0,201,167,.12); border:1px solid rgba(0,201,167,.25); border-radius:6px; padding:12px 14px; color:var(--teal); font-size:13px; font-weight:500;">✓ Sample added to local training queue. Raw data will never leave this hospital node.</div>
+        <div style="display:flex; gap:12px;">
+          <button class="btn btn-primary" onclick="simulateUpload()">Add to Training Queue</button>
+          <button class="btn btn-secondary" onclick="runInference()">Get Immediate Diagnosis</button>
+        </div>
+        <div id="upload-result" class="fade-in inner-card" style="display:none; padding:14px;">
+           <div class="text3" style="margin-bottom:6px;">Diagnosis Result</div>
+           <div class="syne" style="color:var(--coral); font-size:18px; font-weight:700; margin-bottom:4px;">Pneumonia</div>
+           <div style="font-size:12px; color:var(--text3); margin-bottom:10px;">Global FL Model · Round 10</div>
+           <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:6px; color:var(--text2);"><span>Confidence</span><span class="mono">87.4%</span></div>
+           <div class="progress-wrap" style="height:6px; margin-bottom:12px; border-radius:4px;"><div class="progress-bar" style="width:87.4%; background:linear-gradient(90deg, #00c9a7, #4f8ef7);"></div></div>
+           <div style="font-size:10px; color:var(--text3); line-height:1.4;">🔒 Inference performed using aggregated global model weights. Patient record encrypted at rest.</div>
+        </div>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:16px;">
+        <div class="card">
+          <h3 class="syne" style="font-size:14px; font-weight:600; margin:0 0 10px 0;">🔒 Privacy Guarantee</h3>
+          <p style="font-size:12px; color:var(--text2); line-height:1.5; margin:0 0 12px 0;">Your patient data never leaves this hospital. The FL system only sends model weight gradients to the central server.</p>
+          <div class="inner-card" style="border-left:2px solid var(--teal); padding:10px 14px;">
+            <div class="text3" style="color:var(--teal); margin-bottom:6px;">Data Flow</div>
+            <div style="font-size:11px; color:var(--text3); line-height:1.6;">Patient Scan → Local Storage<br>Local Model Trains on Data<br>Only Gradients → FL Server<br>Global Model → All Hospitals</div>
+          </div>
+        </div>
+        <div class="card">
+          <h3 class="syne" style="font-size:14px; font-weight:600; margin:0 0 12px 0;">📊 Supported Datasets</h3>
+          <div style="display:flex; flex-direction:column;">
+            <div style="padding:10px 0; border-bottom:1px solid var(--border); display:flex; justify-content:space-between;">
+              <div><div style="font-weight:600; font-size:12px; color:var(--text);">NIH Chest X-Ray</div><div style="font-size:11px; color:var(--text3); margin-top:4px;">112,120 images · 14 pathologies</div></div><span class="chip chip-teal" style="font-size:9px; padding:2px 6px; height:fit-content;">Open</span>
+            </div>
+            <div style="padding:10px 0; border-bottom:1px solid var(--border); display:flex; justify-content:space-between;">
+              <div><div style="font-weight:600; font-size:12px; color:var(--text);">CheXpert</div><div style="font-size:11px; color:var(--text3); margin-top:4px;">224,316 images · Stanford</div></div><span class="chip chip-teal" style="font-size:9px; padding:2px 6px; height:fit-content;">Open</span>
+            </div>
+            <div style="padding:10px 0; border-bottom:1px solid var(--border); display:flex; justify-content:space-between;">
+              <div><div style="font-weight:600; font-size:12px; color:var(--text);">COVID-19 CT</div><div style="font-size:11px; color:var(--text3); margin-top:4px;">Lung segmentation dataset</div></div><span class="chip chip-teal" style="font-size:9px; padding:2px 6px; height:fit-content;">Open</span>
+            </div>
+            <div style="padding:10px 0; display:flex; justify-content:space-between;">
+              <div><div style="font-weight:600; font-size:12px; color:var(--text);">MIMIC-CXR</div><div style="font-size:11px; color:var(--text3); margin-top:4px;">Radiology reports + images</div></div><span class="chip chip-teal" style="font-size:9px; padding:2px 6px; height:fit-content;">Open</span>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <h3 class="syne" style="font-size:14px; font-weight:600; margin:0 0 12px 0;">⚙️ Preprocessing</h3>
+          <div style="display:flex; flex-direction:column; gap:8px;">
+            <div style="font-size:12px; color:var(--text2);"><span style="color:var(--teal); margin-right:6px;">✓</span> Resize to 224×224 px (ResNet-50)</div>
+            <div style="font-size:12px; color:var(--text2);"><span style="color:var(--teal); margin-right:6px;">✓</span> Normalize: mean=[0.485] std=[0.229]</div>
+            <div style="font-size:12px; color:var(--text2);"><span style="color:var(--teal); margin-right:6px;">✓</span> CLAHE histogram equalization</div>
+            <div style="font-size:12px; color:var(--text2);"><span style="color:var(--teal); margin-right:6px;">✓</span> Random horizontal flip (training)</div>
+            <div style="font-size:12px; color:var(--text2);"><span style="color:var(--teal); margin-right:6px;">✓</span> Privacy: k-anonymity applied</div>
+            <div style="font-size:12px; color:var(--text2);"><span style="color:var(--teal); margin-right:6px;">✓</span> DICOM metadata stripped</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

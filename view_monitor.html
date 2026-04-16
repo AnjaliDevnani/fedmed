@@ -1,0 +1,118 @@
+<template id="view-monitor">
+  <div class="fade-in">
+    <div class="page-header">
+      <h2 class="page-title syne">Federated Learning Monitor</h2>
+      <p class="page-subtitle">Real-time training across all hospital nodes</p>
+    </div>
+    <div class="card" style="margin-bottom:24px;">
+      <div class="flex-header">
+        <h3 class="card-title syne">Training Rounds</h3>
+        <div style="display:flex; gap:12px; align-items:center;">
+          <span id="round-label" class="chip chip-amber">Round 0/10</span>
+          <button id="start-btn" class="btn btn-primary" onclick="toggleTraining()">▶ Start Training</button>
+          <button class="btn btn-secondary" onclick="resetMonitor()">↺ Reset</button>
+        </div>
+      </div>
+      <div style="display:flex; gap:4px; height:4px; margin-bottom:12px; border-radius:4px; overflow:hidden;">
+        <div class="round-block" style="flex:1; background:var(--amber); box-shadow:0 0 8px var(--amber);"></div>
+        <div class="round-block" style="flex:1; background:var(--border);"></div>
+        <div class="round-block" style="flex:1; background:var(--border);"></div>
+        <div class="round-block" style="flex:1; background:var(--border);"></div>
+        <div class="round-block" style="flex:1; background:var(--border);"></div>
+        <div class="round-block" style="flex:1; background:var(--border);"></div>
+        <div class="round-block" style="flex:1; background:var(--border);"></div>
+        <div class="round-block" style="flex:1; background:var(--border);"></div>
+        <div class="round-block" style="flex:1; background:var(--border);"></div>
+        <div class="round-block" style="flex:1; background:var(--border);"></div>
+      </div>
+      <div style="display:flex; justify-content:space-between; font-size:10px; color:var(--text3); font-family:'DM Mono';">
+         <span>Round 1</span><span>Round 5</span><span>Round 10</span>
+      </div>
+    </div>
+    <div class="card" style="margin-bottom:24px;">
+      <div class="flex-header">
+        <h3 class="card-title syne">Live Training Visualization</h3>
+        <span id="monitor-phase-chip" class="chip chip-gray">Ready</span>
+      </div>
+      <div class="inner-card" style="border:none; border-radius:10px;">
+        <div style="display:flex; flex-direction:column; align-items:center; padding:30px 0;">
+          <div style="display:flex; align-items:flex-start; justify-content:center;">
+            <div class="node-wrap">
+              <div id="hosp-a" class="node-circle node-hospital idle"><svg viewBox="0 0 22 22" fill="none"><path d="M3 19V10L11 3L19 10V19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 19V13H14V19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              <p class="node-label">Hospital A</p><p id="stat-h-a" class="node-status">Idle</p>
+            </div>
+            <div style="width:80px; height:2px; background:var(--border2); margin-top:32px; position:relative;">
+              <div id="pack-a" class="fl-packet" style="top:-3px;"></div>
+            </div>
+            <div class="node-wrap">
+              <div id="server-node" class="node-circle node-server"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2L20 6V12C20 16.4 16.4 21 12 22C7.6 21 4 16.4 4 12V6L12 2Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M9 12L11 14L15 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              <p class="node-label">FL Server</p><p id="stat-server" class="node-status">Flower Aggregator</p>
+            </div>
+            <div style="width:80px; height:2px; background:var(--border2); margin-top:32px; position:relative;">
+              <div id="pack-c" class="fl-packet" style="top:-3px;"></div>
+            </div>
+            <div class="node-wrap">
+              <div id="hosp-c" class="node-circle node-hospital idle"><svg viewBox="0 0 22 22" fill="none"><path d="M3 19V10L11 3L19 10V19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 19V13H14V19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              <p class="node-label">Hospital C</p><p id="stat-h-c" class="node-status">Idle</p>
+            </div>
+          </div>
+          <div style="display:flex; flex-direction:column; align-items:center; margin-top:-30px;">
+            <div style="width:2px; height:60px; background:var(--border2); position:relative;">
+              <div id="pack-b" class="fl-packet" style="left:-3px;"></div>
+            </div>
+            <div class="node-wrap" style="margin-top:8px;">
+              <div id="hosp-b" class="node-circle node-hospital idle"><svg viewBox="0 0 22 22" fill="none"><path d="M3 19V10L11 3L19 10V19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 19V13H14V19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              <p class="node-label">Hospital B</p><p id="stat-h-b" class="node-status">Idle</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-top:16px;">
+        <div class="inner-card" style="padding:12px;">
+          <div class="text3" style="margin-bottom:6px;">ε (epsilon)</div>
+          <div class="mono" style="color:var(--teal); font-size:18px;">0.84</div>
+        </div>
+        <div class="inner-card" style="padding:12px;">
+          <div class="text3" style="margin-bottom:6px;">δ (delta)</div>
+          <div class="mono" style="color:var(--teal); font-size:18px;">1e-5</div>
+        </div>
+        <div class="inner-card" style="padding:12px;">
+          <div class="text3" style="margin-bottom:6px;">Noise σ</div>
+          <div class="mono" style="color:var(--teal); font-size:18px;">1.2</div>
+        </div>
+        <div class="inner-card" style="padding:12px;">
+           <div class="text3" style="margin-bottom:6px;">Clip Norm</div>
+           <div class="mono" style="color:var(--teal); font-size:18px;">1.0</div>
+        </div>
+      </div>
+    </div>
+    <div class="grid-2-65">
+      <div class="card">
+        <h3 class="card-title syne" style="margin-bottom:16px;">Live Accuracy / Loss</h3>
+        <div style="height: 180px;"><canvas id="live-chart"></canvas></div>
+      </div>
+      <div class="card">
+        <h3 class="card-title syne" style="margin-bottom:16px;">Per-Client Metrics</h3>
+        <div style="display:flex; flex-direction:column; gap:16px;">
+          <div>
+            <div style="display:flex; justify-content:space-between; margin-bottom:4px; font-size:12px; font-weight:500;"><span>City General</span><span id="client-acc-A" class="mono text3">--%</span></div>
+            <div class="progress-wrap" style="height:5px;"><div id="client-bar-A" class="progress-bar" style="width:0%; background:var(--teal);"></div></div>
+          </div>
+          <div>
+            <div style="display:flex; justify-content:space-between; margin-bottom:4px; font-size:12px; font-weight:500;"><span>St. Mary's Med</span><span id="client-acc-B" class="mono text3">--%</span></div>
+            <div class="progress-wrap" style="height:5px;"><div id="client-bar-B" class="progress-bar" style="width:0%; background:var(--teal);"></div></div>
+          </div>
+          <div>
+            <div style="display:flex; justify-content:space-between; margin-bottom:4px; font-size:12px; font-weight:500;"><span>Apollo Research</span><span id="client-acc-C" class="mono text3">--%</span></div>
+            <div class="progress-wrap" style="height:5px;"><div id="client-bar-C" class="progress-bar" style="width:0%; background:var(--teal);"></div></div>
+          </div>
+          <div style="height:1px; background:var(--border); margin:4px 0;"></div>
+          <div>
+            <div style="display:flex; justify-content:space-between; margin-bottom:4px; font-size:12px; font-weight:600;"><span style="color:var(--text);">Global (FedAvg)</span><span id="global-acc-val" class="mono" style="color:var(--teal);">--%</span></div>
+            <div class="progress-wrap" style="height:5px;"><div id="global-bar" class="progress-bar" style="width:0%;"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
