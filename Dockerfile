@@ -6,6 +6,9 @@ WORKDIR /app
 
 # Copy requirement files and install
 COPY fedmed_model/requirements.txt .
+# Install CPU-only version of PyTorch to save 4+ GB of disk space (No GPU on server)
+RUN pip install --no-cache-dir torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
+
 # Add the web server dependencies
 RUN pip install --no-cache-dir -r requirements.txt fastapi uvicorn python-multipart
 
